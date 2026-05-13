@@ -7,170 +7,146 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     html { scroll-behavior: smooth; }
-    body { font-family: Arial, sans-serif; background: #0b1020; overflow-x: hidden; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0b1020; color: white; overflow-x: hidden; }
     .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
     .gradient-text { background: linear-gradient(to right, #67e8f9, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .bg-glow { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
     .glow1, .glow2 { position: absolute; width: 500px; height: 500px; border-radius: 999px; filter: blur(120px); }
-    .glow1 { background: rgba(6, 182, 212, 0.2); top: -100px; left: -100px; }
-    .glow2 { background: rgba(168, 85, 247, 0.2); bottom: -100px; right: -100px; }
+    .glow1 { background: rgba(6, 182, 212, 0.15); top: -100px; left: -100px; }
+    .glow2 { background: rgba(168, 85, 247, 0.15); bottom: -100px; right: -100px; }
   </style>
 </head>
-<body class="text-white">
+<body>
 
 <div class="bg-glow">
   <div class="glow1"></div>
   <div class="glow2"></div>
 </div>
 
+<!-- NAVBAR -->
 <header class="glass sticky top-0 z-50 border-b border-white/10">
   <div class="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row justify-between items-center gap-6">
     <div>
-      <h1 class="text-4xl font-black gradient-text">Générations Connectées</h1>
-      <p class="text-gray-400 mt-2">Association numérique intergénérationnelle</p>
+      <h1 class="text-3xl font-black gradient-text">Générations Connectées</h1>
+      <p class="text-xs text-gray-400 tracking-widest uppercase mt-1">Inclusion numérique</p>
     </div>
-    <nav class="flex flex-wrap gap-4">
-      <a href="#accueil" class="glass px-5 py-3 rounded-2xl hover:bg-cyan-400 hover:text-black transition">Accueil</a>
-      <a href="#association" class="glass px-5 py-3 rounded-2xl hover:bg-cyan-400 hover:text-black transition">Association</a>
-      <a href="#ateliers" class="glass px-5 py-3 rounded-2xl hover:bg-cyan-400 hover:text-black transition">Ateliers</a>
-      <a href="#benevoles" class="glass px-5 py-3 rounded-2xl hover:bg-cyan-400 hover:text-black transition">Bénévoles</a>
-      <a href="#inscription" class="glass px-5 py-3 rounded-2xl hover:bg-cyan-400 hover:text-black transition font-bold border-cyan-400/50">Inscription</a>
+    <nav class="flex flex-wrap gap-3">
+      <a href="#accueil" class="glass px-4 py-2 rounded-xl hover:bg-cyan-400 hover:text-black transition text-sm">Accueil</a>
+      <a href="#association" class="glass px-4 py-2 rounded-xl hover:bg-cyan-400 hover:text-black transition text-sm">Association</a>
+      <a href="#ateliers" class="glass px-4 py-2 rounded-xl hover:bg-cyan-400 hover:text-black transition text-sm">Ateliers</a>
+      <a href="#inscription" class="bg-cyan-500 text-black px-4 py-2 rounded-xl font-bold hover:bg-cyan-300 transition text-sm">S'inscrire</a>
     </nav>
   </div>
 </header>
 
-<section id="accueil" class="min-h-screen flex items-center px-6 py-20">
+<!-- HERO -->
+<section id="accueil" class="min-h-[80vh] flex items-center px-6 py-20">
   <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
     <div>
-      <div class="inline-block px-5 py-2 rounded-full bg-cyan-500/20 border border-cyan-400/20 text-cyan-300 mb-8">✨ Inclusion numérique pour tous</div>
-      <h2 class="text-6xl md:text-7xl font-black leading-tight">Le numérique devient simple.</h2>
-      <p class="mt-8 text-2xl text-gray-300 leading-relaxed">Des ateliers modernes et humains pour aider les seniors à comprendre internet, les smartphones et les outils numériques.</p>
+      <div class="inline-block px-4 py-1 rounded-full bg-cyan-500/20 border border-cyan-400/20 text-cyan-300 text-sm mb-6">✨ Nouveau projet associatif</div>
+      <h2 class="text-5xl md:text-7xl font-black leading-tight">Le numérique devient simple.</h2>
+      <p class="mt-8 text-xl text-gray-300 leading-relaxed">Nous créons des ateliers humains pour aider chacun à maîtriser internet et les outils modernes, peu importe son âge.</p>
       <div class="flex flex-wrap gap-5 mt-10">
-        <a href="#inscription" class="bg-cyan-400 text-black px-8 py-5 rounded-3xl text-xl font-bold hover:scale-105 transition shadow-2xl shadow-cyan-500/30">S'inscrire</a>
-        <a href="#ateliers" class="glass px-8 py-5 rounded-3xl text-xl hover:bg-white/10 transition">Découvrir</a>
+        <a href="#inscription" class="bg-cyan-400 text-black px-8 py-4 rounded-2xl text-lg font-bold hover:scale-105 transition shadow-xl shadow-cyan-500/20">Nous rejoindre</a>
+        <a href="#ateliers" class="glass px-8 py-4 rounded-2xl text-lg hover:bg-white/10 transition">Nos ateliers</a>
       </div>
     </div>
-    <div>
-      <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1400&auto=format&fit=crop" class="rounded-[40px] border border-white/10 shadow-2xl" alt="Atelier numérique">
+    <div class="relative">
+      <div class="absolute inset-0 bg-cyan-500/10 blur-3xl rounded-full"></div>
+      <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1400&auto=format&fit=crop" class="relative rounded-[40px] border border-white/10 shadow-2xl" alt="Entraide">
     </div>
   </div>
 </section>
 
-<section id="association" class="px-6 py-24">
+<!-- ASSOCIATION -->
+<section id="association" class="px-6 py-24 bg-black/20">
   <div class="max-w-7xl mx-auto">
-    <div class="text-center mb-20">
-      <h2 class="text-6xl font-black">Notre association</h2>
-      <p class="mt-6 text-2xl text-gray-400 max-w-3xl mx-auto">Nous accompagnons les personnes âgées dans leur découverte du numérique avec patience et bienveillance.</p>
+    <div class="text-center mb-16">
+      <h2 class="text-5xl font-black">Notre vision</h2>
+      <p class="mt-4 text-xl text-gray-400">Patience, bienveillance et partage.</p>
     </div>
     <div class="grid lg:grid-cols-3 gap-8">
-      <div class="glass rounded-[35px] p-10 hover:-translate-y-2 transition">
-        <div class="text-7xl mb-8">🤝</div>
-        <h3 class="text-3xl font-bold mb-5">Accompagnement humain</h3>
-        <p class="text-gray-400 text-lg leading-relaxed">Des bénévoles formés accompagnent chaque participant individuellement.</p>
+      <div class="glass rounded-3xl p-8 hover:-translate-y-2 transition">
+        <div class="text-5xl mb-6">🤝</div>
+        <h3 class="text-2xl font-bold mb-4">Accompagnement</h3>
+        <p class="text-gray-400">Un apprentissage pas à pas, adapté au rythme de chaque participant.</p>
       </div>
-      <div class="glass rounded-[35px] p-10 hover:-translate-y-2 transition">
-        <div class="text-7xl mb-8">💡</div>
-        <h3 class="text-3xl font-bold mb-5">Ateliers modernes</h3>
-        <p class="text-gray-400 text-lg leading-relaxed">Des contenus adaptés aux outils actuels et aux besoins quotidiens.</p>
+      <div class="glass rounded-3xl p-8 hover:-translate-y-2 transition">
+        <div class="text-5xl mb-6">💡</div>
+        <h3 class="text-2xl font-bold mb-4">Simplicité</h3>
+        <p class="text-gray-400">Pas de jargon technique inutile, on se concentre sur l'essentiel.</p>
       </div>
-      <div class="glass rounded-[35px] p-10 hover:-translate-y-2 transition">
-        <div class="text-7xl mb-8">🌍</div>
-        <h3 class="text-3xl font-bold mb-5">Accessible à tous</h3>
-        <p class="text-gray-400 text-lg leading-relaxed">Une pédagogie simple et ludique pour les débutants complets.</p>
+      <div class="glass rounded-3xl p-8 hover:-translate-y-2 transition">
+        <div class="text-5xl mb-6">🌍</div>
+        <h3 class="text-2xl font-bold mb-4">Lien social</h3>
+        <p class="text-gray-400">Plus que de l'informatique, c'est un moment d'échange convivial.</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ATELIERS -->
 <section id="ateliers" class="px-6 py-24">
   <div class="max-w-7xl mx-auto">
-    <div class="flex flex-col lg:flex-row justify-between items-start gap-10 mb-20">
-        <div>
-            <h2 class="text-6xl font-black">Nos ateliers</h2>
-            <p class="mt-5 text-2xl text-gray-400 max-w-2xl">Apprendre en s'amusant avec des ateliers concrets et visuels.</p>
-        </div>
-        <div class="bg-cyan-500/10 border border-cyan-400/20 rounded-3xl p-8">
-            <div class="text-5xl font-black text-cyan-300">+300</div>
-            <p class="text-gray-300 mt-2">Seniors déjà accompagnés</p>
-        </div>
-    </div>
-    <div class="grid lg:grid-cols-2 gap-10">
-      <div class="relative overflow-hidden rounded-[40px] border border-white/10 h-[420px] group">
-        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-700">
-        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-        <div class="absolute bottom-0 p-10">
-          <div class="text-6xl mb-4">📱</div>
-          <h3 class="text-4xl font-black">Maîtriser son Smartphone</h3>
+    <h2 class="text-5xl font-black mb-12 text-center lg:text-left">Nos ateliers</h2>
+    <div class="grid lg:grid-cols-2 gap-8">
+      <div class="relative overflow-hidden rounded-[30px] border border-white/10 h-80 group">
+        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent p-8 flex flex-col justify-end">
+          <h3 class="text-3xl font-bold">Smartphone & Tablette</h3>
         </div>
       </div>
-      <div class="relative overflow-hidden rounded-[40px] border border-white/10 h-[420px] group">
-        <img src="https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?q=80&w=1200&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-700">
-        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-        <div class="absolute bottom-0 p-10">
-          <div class="text-6xl mb-4">💻</div>
-          <h3 class="text-4xl font-black">Découvrir l'Ordinateur</h3>
+      <div class="relative overflow-hidden rounded-[30px] border border-white/10 h-80 group">
+        <img src="https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?q=80&w=1200&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent p-8 flex flex-col justify-end">
+          <h3 class="text-3xl font-bold">Découverte Ordinateur</h3>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="benevoles" class="px-6 py-24">
-    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-      <div>
-        <h2 class="text-6xl font-black leading-tight">Devenir bénévole</h2>
-        <p class="mt-8 text-2xl text-gray-400 leading-relaxed">Partagez vos connaissances et aidez à rompre l'isolement numérique dans une ambiance conviviale.</p>
-        <div class="flex flex-col gap-5 mt-10 text-xl">
-          <div class="glass rounded-3xl p-6">📚 Formation des bénévoles incluse</div>
-          <div class="glass rounded-3xl p-6">☕ Café et ambiance conviviale</div>
-          <div class="glass rounded-3xl p-6">🌍 Impact social réel et immédiat</div>
-        </div>
-      </div>
-      <div>
-        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1400&auto=format&fit=crop" alt="Bénévoles" class="rounded-[40px] border border-white/10 shadow-2xl">
-      </div>
-    </div>
-</section>
-
+<!-- FORMULAIRE -->
 <section id="inscription" class="px-6 py-24">
-  <div class="max-w-5xl mx-auto bg-white text-black rounded-[50px] p-12 md:p-20 shadow-2xl">
-    <div class="text-center mb-14">
-      <h2 class="text-6xl font-black text-gray-900">Inscription</h2>
-      <p class="mt-5 text-xl text-gray-500">Rejoignez nos prochains ateliers.</p>
+  <div class="max-w-4xl mx-auto bg-white text-black rounded-[40px] p-10 md:p-16 shadow-2xl">
+    <div class="text-center mb-12">
+      <h2 class="text-5xl font-black text-gray-900">Nous contacter</h2>
+      <p class="mt-4 text-lg text-gray-500">Que vous soyez débutant ou que vous souhaitiez aider.</p>
     </div>
-    <form id="inscriptionForm" class="grid md:grid-cols-2 gap-8">
-      <input type="text" name="nom" placeholder="Nom complet" required class="bg-gray-100 p-6 rounded-3xl text-xl outline-none focus:ring-4 focus:ring-cyan-300">
-      <input type="email" name="email" placeholder="Adresse email" required class="bg-gray-100 p-6 rounded-3xl text-xl outline-none focus:ring-4 focus:ring-cyan-300">
-      <input type="tel" name="telephone" placeholder="Téléphone" required class="bg-gray-100 p-6 rounded-3xl text-xl outline-none focus:ring-4 focus:ring-cyan-300">
-      <select name="atelier" required class="bg-gray-100 p-6 rounded-3xl text-xl outline-none focus:ring-4 focus:ring-cyan-300">
-        <option value="">Choisir un atelier</option>
+    <form id="inscriptionForm" class="grid md:grid-cols-2 gap-6">
+      <input type="text" name="nom" placeholder="Nom complet" required class="bg-gray-100 p-5 rounded-2xl text-lg outline-none focus:ring-2 focus:ring-cyan-500">
+      <input type="email" name="email" placeholder="Email" required class="bg-gray-100 p-5 rounded-2xl text-lg outline-none focus:ring-2 focus:ring-cyan-500">
+      <input type="tel" name="telephone" placeholder="Téléphone" required class="bg-gray-100 p-5 rounded-2xl text-lg outline-none focus:ring-2 focus:ring-cyan-500">
+      
+      <select name="type" required class="bg-gray-100 p-5 rounded-2xl text-lg outline-none focus:ring-2 focus:ring-cyan-500">
+        <option value="">Vous êtes ?</option>
+        <option value="participant">Je souhaite apprendre (Sénior)</option>
+        <option value="benevole">Je souhaite devenir bénévole</option>
+        <option value="partenaire">Autre / Partenaire</option>
+      </select>
+
+      <select name="atelier" class="md:col-span-2 bg-gray-100 p-5 rounded-2xl text-lg outline-none focus:ring-2 focus:ring-cyan-500">
+        <option value="aucun">Choisir un atelier (si applicable)</option>
         <option>Smartphone</option>
         <option>Ordinateur</option>
-        <option>Internet sécurisé</option>
+        <option>Sécurité Internet</option>
       </select>
-      <textarea name="message" placeholder="Votre message (optionnel)" rows="6" class="md:col-span-2 bg-gray-100 p-6 rounded-3xl text-xl outline-none focus:ring-4 focus:ring-cyan-300 resize-none"></textarea>
-      <button type="submit" id="submitBtn" class="md:col-span-2 bg-black text-white py-6 rounded-3xl text-2xl font-bold hover:bg-cyan-500 hover:text-black transition">
-        Envoyer l'inscription
+
+      <textarea name="message" placeholder="Votre message..." rows="4" class="md:col-span-2 bg-gray-100 p-5 rounded-2xl text-lg outline-none focus:ring-2 focus:ring-cyan-500 resize-none"></textarea>
+      
+      <button type="submit" id="submitBtn" class="md:col-span-2 bg-black text-white py-5 rounded-2xl text-xl font-bold hover:bg-cyan-500 hover:text-black transition duration-300">
+        Envoyer ma demande
       </button>
     </form>
-    <div id="successMessage" class="hidden mt-8 bg-green-100 border border-green-300 text-green-800 p-6 rounded-3xl text-center text-xl font-semibold">
-      ✅ Votre inscription a bien été envoyée.
+    <div id="successMessage" class="hidden mt-6 bg-green-100 border border-green-200 text-green-700 p-5 rounded-2xl text-center font-bold">
+      ✅ Message envoyé avec succès !
     </div>
   </div>
 </section>
 
-<footer class="border-t border-white/10 bg-black/30 py-10 px-6 text-gray-400">
-  <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between gap-10 items-center">
-    <div>
-      <h3 class="text-2xl font-bold text-white">Générations Connectées</h3>
-      <p class="mt-2">Le numérique accessible à tous.</p>
-    </div>
-    <div class="flex gap-4 text-3xl">
-      <div class="glass w-14 h-14 rounded-2xl flex items-center justify-center">📘</div>
-      <div class="glass w-14 h-14 rounded-2xl flex items-center justify-center">📸</div>
-      <div class="glass w-14 h-14 rounded-2xl flex items-center justify-center">✉️</div>
-    </div>
-  </div>
+<footer class="py-12 px-6 border-t border-white/10 text-center text-gray-500">
+  <p class="font-bold text-white mb-2">Générations Connectées</p>
+  <p>© 2026 - Ensemble pour un numérique solidaire.</p>
 </footer>
 
 <script type="module">
@@ -203,6 +179,7 @@
       nom: formData.get('nom'),
       email: formData.get('email'),
       telephone: formData.get('telephone'),
+      type_profil: formData.get('type'),
       atelier: formData.get('atelier'),
       message: formData.get('message'),
       createdAt: serverTimestamp()
@@ -212,10 +189,12 @@
       await addDoc(collection(db, 'inscriptions'), data);
       successMessage.classList.remove('hidden');
       form.reset();
+      setTimeout(() => successMessage.classList.add('hidden'), 5000);
     } catch (error) {
-      alert('Erreur lors de l\'envoi : ' + error.message);
+      alert('Une erreur est survenue. Vérifiez vos règles Firebase ou votre connexion.');
+      console.error(error);
     } finally {
-      submitBtn.innerText = "Envoyer l'inscription";
+      submitBtn.innerText = "Envoyer ma demande";
       submitBtn.disabled = false;
     }
   });
