@@ -10,6 +10,7 @@
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0b1020; color: white; overflow-x: hidden; }
     .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
     .gradient-text { background: linear-gradient(to right, #67e8f9, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .gradient-donor { background: linear-gradient(135deg, #ec4899, #8b5cf6); }
     .bg-glow { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
     .glow1, .glow2 { position: absolute; width: 500px; height: 500px; border-radius: 999px; filter: blur(120px); }
     .glow1 { background: rgba(6, 182, 212, 0.15); top: -100px; left: -100px; }
@@ -30,10 +31,11 @@
       <h1 class="text-3xl font-black gradient-text">Générations Connectées</h1>
       <p class="text-xs text-gray-400 tracking-widest uppercase mt-1">Inclusion numérique</p>
     </div>
-    <nav class="flex flex-wrap gap-3">
-      <a href="#accueil" class="glass px-4 py-2 rounded-xl hover:bg-cyan-400 hover:text-black transition text-sm">Accueil</a>
-      <a href="#association" class="glass px-4 py-2 rounded-xl hover:bg-cyan-400 hover:text-black transition text-sm">Association</a>
-      <a href="#ateliers" class="glass px-4 py-2 rounded-xl hover:bg-cyan-400 hover:text-black transition text-sm">Ateliers</a>
+    <nav class="flex flex-wrap items-center gap-3">
+      <a href="#accueil" class="glass px-4 py-2 rounded-xl hover:bg-white/10 transition text-sm">Accueil</a>
+      <a href="#association" class="glass px-4 py-2 rounded-xl hover:bg-white/10 transition text-sm">Association</a>
+      <a href="#ateliers" class="glass px-4 py-2 rounded-xl hover:bg-white/10 transition text-sm">Ateliers</a>
+      <a href="#don" class="glass px-4 py-2 rounded-xl text-pink-400 border border-pink-500/30 hover:bg-pink-500/10 transition text-sm font-medium">❤️ Faire un don</a>
       <a href="#inscription" class="bg-cyan-500 text-black px-4 py-2 rounded-xl font-bold hover:bg-cyan-300 transition text-sm">S'inscrire</a>
     </nav>
   </div>
@@ -106,8 +108,26 @@
   </div>
 </section>
 
+<!-- SECTION DON -->
+<section id="don" class="px-6 py-12">
+  <div class="max-w-4xl mx-auto gradient-donor rounded-[40px] p-8 md:p-12 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 border border-white/20">
+    <div class="absolute inset-0 bg-white/5 backdrop-blur-sm z-0"></div>
+    <div class="relative z-10 max-w-xl text-center md:text-left">
+      <span class="bg-white/20 border border-white/30 text-white text-xs uppercase font-bold tracking-widest px-3 py-1 rounded-full">Soutien Solidaire</span>
+      <h2 class="text-3xl md:text-4xl font-black mt-4 mb-3 text-white">Soutenir le projet</h2>
+      <p class="text-white/80 text-base md:text-lg">Vos dons nous permettent de financer le matériel informatique des ateliers itinérants et de garder nos formations 100 % gratuites pour les participants.</p>
+    </div>
+    <div class="relative z-10 shrink-0">
+      <!-- REMPLACE LE # PAR TON LIEN HELLOASSO OU PAYPAL -->
+      <a href="#" target="_blank" class="inline-block bg-white text-purple-950 px-8 py-5 rounded-2xl text-lg font-black hover:bg-gray-100 hover:scale-105 transition duration-300 shadow-xl shadow-purple-950/20">
+        ❤️ Faire un don
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- FORMULAIRE -->
-<section id="inscription" class="px-6 py-24">
+<section id="inscription" class="px-6 py-12">
   <div class="max-w-4xl mx-auto bg-white text-black rounded-[40px] p-10 md:p-16 shadow-2xl">
     <div class="text-center mb-12">
       <h2 class="text-5xl font-black text-gray-900">Nous contacter</h2>
