@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Console Admin - Générations Connectées</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #0b1020; color: white; }
+    .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
+    .glass-input { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); color: white; }
+  </style>
+</head>
+<body class="p-6">
+
+  <!-- ZONE DE CONNEXION -->
+  <div id="loginSection" class="max-w-md mx-auto mt-20 glass p-8 rounded-3xl border border-white/10">
+    <h2 class="text-3xl font-black text-center mb-6 text-cyan-400">Connexion Admin</h2>
+    <form id="loginForm" class="space-y-4">
+      <input type="email" id="loginEmail" placeholder="Email Admin" required class="w-full glass-input p-4 rounded-xl outline-none">
+      <input type="password" id="loginPassword" placeholder="Mot de passe" required class="w-full glass-input p-4 rounded-xl outline-none">
+      <button type="submit" class="w-full bg-cyan-500 text-black py-4 rounded-xl font-bold hover:bg-cyan-300 transition">Se connecter</button>
+    </form>
+  </div>
+
+  <!-- PANNEAU ADMINISTRATEUR GLOBAL -->
+  <div id="adminPanel" class="hidden max-w-7xl mx-auto space-y-12">
+    
+    <!-- AUTH HEADER -->
+    <div class="flex justify-between items-center border-b border-white/10 pb-6">
+      <div>
+        <h1 class="text-4xl font-black text-cyan-400">Tableau de Bord Administrateur</h1>
+        <p class="text-gray-400 text-sm">Contrôle complet de la plateforme.</p>
+      </div>
+      <button id="logoutBtn" class="bg-red-500/20 text-red-400 border border-red-500/30 px-5 py-2 rounded-xl text-sm font-bold hover:bg-red-500 hover:text-white transition">Se déconnecter</button>
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="grid lg:grid-cols-3 gap-8">
+      
+      <!-- COLONNE CONTROLE : BLOG & FORMULAIRE -->
+      <div class="lg:col-span-1 space-y-8">
+        
+        <!-- MODULE 1 : PUBLIER SOUVENIR (BLOG PHOTO LOCAL) -->
+        <div class="glass p-6 rounded-3xl border border-white/10">
+          <h2 class="text-xl font-bold mb-4 text-cyan-300">📸 Publier un Article Photo</h2>
+          <form id="blogForm" class="space-y-4">
+            <input type="text" id="blogTitle" placeholder="Titre de l'atelier / événement" required class="w-full glass-input p-3 rounded-xl outline-none text-sm">
+            
+            <div class="space-y-1">
+              <label class="text-xs text-gray-400 block font-medium">Sélectionner ou glisser une photo :</label>
+              <input type="file" id="blogFile" accept="image/*" required class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-cyan-500/10 file:text-cyan-400 hover:file:bg-cyan-500/20 cursor-pointer">
+            </div>
+
+            <textarea id="blogText" placeholder="Écrire le descriptif ou les anecdotes de la journée..." rows="4" required class="w-full glass-input p-3 rounded-xl outline-none text-sm resize-none"></textarea>
+            <button type="submit" id="blogSubmit" class="w-full bg-cyan-500 text-black py-3 rounded-xl font-bold hover:bg-cyan-300 transition text-sm">Publier sur le blog</button>
+          </form>
+        </div>
+
+        <!-- MODULE 2 : ÉDITION CONFIG FORMULAIRE PUBLIC -->
+        <div class="glass p-6 rounded-3xl border border-white/10">
+          <h2 class="text-xl font-bold mb-4 text-amber-400">⚙️ Configurer le Formulaire</h2>
+          <form id="configForm" class="space-y-4">
+            <input type="text" id="configTitle" placeholder="Titre principal (ex: Nous contacter)" required class="w-full glass-input p-3 rounded-xl outline-none text-sm">
+            <input type="text" id="configDesc" placeholder="Sous-titre / Consignes d'aide..." required class="w-full glass-input p-3 rounded-xl outline-none text-sm">
+            <textarea id="configPlaceholder" placeholder="Texte d'aide par défaut à l'intérieur de la zone de texte libre..." rows="3" required class="w-full glass-input p-3 rounded-xl outline-none text-sm resize-none"></textarea>
+            <button type="submit" class="w-full bg-amber-500 text-black py-3 rounded-xl font-bold hover:bg-amber-400 transition text-sm">Mettre à jour le formulaire</button>
+          </form>
+          <div id="configSuccess" class="hidden mt-3 text-xs bg-green-500/20 text-green-400 border border-green-500/30 p-2 rounded-lg text-center font-bold">
+            ⚡ Configuration synchronisée en direct !
+          </div>
+        </div>
+
+      </div>
+
+      <!-- COLONNE RECEPTION : INSCRIPTIONS -->
+      <div class="lg:col-span-2 space-y-4">
+        <h2 class="text-2xl font-black text-cyan-300">📥 Demandes d'inscriptions reçues</h2>
+        <div id="inscriptionsList" class="space-y-4">
+          <p class="text-gray-500 italic">Chargement en cours...</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PIED DE COMPTE : MODERATION COMMENTAIRES -->
+    <div class="border-t border-white/10 pt-8">
+      <h2 class="text-2xl font-black text-cyan-300 mb-6">💬 Modération du Livre d'Or</h2>
+      <div id="adminAvisList" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <p class="text-gray-500 italic">Chargement des avis...</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js'
+    import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, doc, deleteDoc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js'
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js'
+
+    const firebaseConfig = {
+      apiKey: 'AIzaSyDTdfi2hDQgwJ4Uh5xPXSZCoFeh2mvgKvk',
+      authDomain: 'generations-connectees.firebaseapp.com',
+      projectId: 'generations-connectees',
+      storageBucket: 'generations-connectees.firebasestorage.app',
+      messagingSenderId: '531534340141',
+      appId: '1:531534340141:web:70a36a706ab4f86fc4d8a4'
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    const loginSection = document.getElementById('loginSection');
+    const adminPanel = document.getElementById('adminPanel');
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        loginSection.classList.add('hidden');
+        adminPanel.classList.remove('hidden');
+        initialiserDashboard();
+      } else {
+        loginSection.classList.remove('hidden');
+        adminPanel.classList.add('hidden');
+      }
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value;
+      const pass = document.getElementById('loginPassword').value;
+      signInWithEmailAndPassword(auth, email, pass).catch(err => alert("Erreur d'accès : " + err.message));
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
+
+    function initialiserDashboard() {
+      
+      // --- PRE-REMPLIR LES CONFIGURATIONS EXISTANTES DU FORMULAIRE ---
+      const configForm = document.getElementById('configForm');
+      const configSuccess = document.getElementById('configSuccess');
+      
+      getDoc(doc(db, 'configuration', 'formulaire')).then((docSnap) => {
+        if(docSnap.exists()){
+          const current = docSnap.data();
+          document.getElementById('configTitle').value = current.titre || '';
+          document.getElementById('configDesc').value = current.description || '';
+          document.getElementById('configPlaceholder').value = current.placeholder || '';
+        }
+      });
+
+      // --- ENREGISTRER LA SOUCH DE CONFIGURATION FORMULAIRE ---
+      configForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try {
+          await setDoc(doc(db, 'configuration', 'formulaire'), {
+            titre: document.getElementById('configTitle').value,
+            description: document.getElementById('configDesc').value,
+            placeholder: document.getElementById('configPlaceholder').value,
+            updatedAt: serverTimestamp()
+          });
+          configSuccess.classList.remove('hidden');
+          setTimeout(() => configSuccess.classList.add('hidden'), 4000);
+        } catch (err) {
+          alert("Erreur de sauvegarde : " + err.message);
+        }
+      });
+
+      // --- PUBLICATION DE POST (CONVERSION EN BASE64 INTEGREE) ---
+      const blogForm = document.getElementById('blogForm');
+      const blogSubmit = document.getElementById('blogSubmit');
+
+      blogForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        blogSubmit.innerText = 'Conversion et envoi de l\'image...';
+        blogSubmit.disabled = true;
+
+        const fileInput = document.getElementById('blogFile');
+        const file = fileInput.files[0];
+
+        if (!file) {
+          alert("Veuillez joindre un fichier photo valide.");
+          blogSubmit.disabled = false;
+          return;
+        }
+
+        // On compresse légèrement l'image si elle est lourde via FileReader pour économiser l'espace Firestore
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = async () => {
+          const base64Image = reader.result;
+
+          const articleData = {
+            titre: document.getElementById('blogTitle').value,
+            texte: document.getElementById('blogText').value,
+            imageUrl: base64Image, // Contient directement l'image encodée sous forme de chaîne de caractères
+            createdAt: serverTimestamp()
+          };
+
+          try {
+            await addDoc(collection(db, 'articles'), articleData);
+            alert('Votre souvenir photo est en ligne ! ✨');
+            blogForm.reset();
+          } catch(err) {
+            alert("Erreur d'envoi de l'article : " + err.message);
+          } finally {
+            blogSubmit.innerText = 'Publier sur le blog';
+            blogSubmit.disabled = false;
+          }
+        };
+      });
+
+      // --- RENDU EN TEMPS REEL DES DEMANDES D'INSCRIPTION ---
+      const listInscriptions = document.getElementById('inscriptionsList');
+      onSnapshot(query(collection(db, 'inscriptions'), orderBy('createdAt', 'desc')), (snapshot) => {
+        listInscriptions.innerHTML = snapshot.empty ? '<p class="text-gray-500">Aucune demande dans la boîte de réception.</p>' : '';
+        snapshot.forEach((snapshotDoc) => {
+          const ins = snapshotDoc.data();
+          const item = document.createElement('div');
+          item.className = 'glass p-5 rounded-2xl border border-white/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4';
+          item.innerHTML = `
+            <div class="flex-1">
+              <div class="flex items-center gap-3">
+                <h4 class="font-bold text-lg">${ins.nom}</h4>
+                <span class="text-xs bg-white/10 text-cyan-300 px-2.5 py-0.5 rounded-full capitalize font-semibold">${ins.type_profil || 'Inconnu'}</span>
+              </div>
+              <p class="text-sm text-gray-400 mt-1">📧 ${ins.email} — 📞 ${ins.telephone}</p>
+              <p class="text-gray-300 text-sm mt-3 bg-black/30 p-3 rounded-xl border border-white/5 whitespace-pre-wrap">${ins.besoins || 'Aucun détail fourni.'}</p>
+            </div>
+            <button data-id="${snapshotDoc.id}" class="btn-del-ins bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500 hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition shrink-0">Traité / Supprimer</button>
+          `;
+          listInscriptions.appendChild(item);
+        });
+
+        document.querySelectorAll('.btn-del-ins').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            if(confirm("Confirmer le traitement et la suppression de cette fiche ?")) {
+              await deleteDoc(doc(db, 'inscriptions', e.target.dataset.id));
+            }
+          });
+        });
+      });
+
+      // --- MODERATION DES AVIS ---
+      const adminAvisList = document.getElementById('adminAvisList');
+      onSnapshot(query(collection(db, 'avis'), orderBy('createdAt', 'desc')), (snapshot) => {
+        adminAvisList.innerHTML = snapshot.empty ? '<p class="text-gray-500">Aucun témoignage trouvé.</p>' : '';
+        snapshot.forEach((snapshotDoc) => {
+          const av = snapshotDoc.data();
+          const item = document.createElement('div');
+          item.className = 'glass p-4 rounded-xl border border-white/10 flex flex-col justify-between';
+          item.innerHTML = `
+            <div>
+              <p class="text-xs text-cyan-400 font-bold mb-1">${av.prenom} (${av.role})</p>
+              <p class="text-sm text-gray-300 italic">"${av.message}"</p>
+            </div>
+            <button data-id="${snapshotDoc.id}" class="btn-del-avis mt-4 bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500 hover:text-white text-xs py-2 rounded-lg font-bold transition w-full">Supprimer</button>
+          `;
+          adminAvisList.appendChild(item);
+        });
+
+        document.querySelectorAll('.btn-del-avis').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            if(confirm("Retirer définitivement ce message du livre d'or ?")) {
+              await deleteDoc(doc(db, 'avis', e.target.dataset.id));
+            }
+          });
+        });
+      });
+
+    }
+  </script>
+</body>
+</html>
