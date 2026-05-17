@@ -83,6 +83,14 @@
 
     </div>
 
+    <!-- NOUVEAU MODULE : GESTION & SUPPRESSION DES PHOTOS DU BLOG -->
+    <div class="border-t border-white/10 pt-8">
+      <h2 class="text-2xl font-black text-cyan-300 mb-6">🖼️ Gestion & Modération du Blog</h2>
+      <div id="adminBlogList" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <p class="text-gray-500 italic">Chargement des articles du blog...</p>
+      </div>
+    </div>
+
     <!-- PIED DE COMPTE : MODERATION COMMENTAIRES -->
     <div class="border-t border-white/10 pt-8">
       <h2 class="text-2xl font-black text-cyan-300 mb-6">💬 Modération du Livre d'Or</h2>
@@ -149,7 +157,7 @@
         }
       });
 
-      // --- ENREGISTRER LA SOUCH DE CONFIGURATION FORMULAIRE ---
+      // --- ENREGISTRER LA SOUCHE DE CONFIGURATION FORMULAIRE ---
       configForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         try {
@@ -184,7 +192,6 @@
           return;
         }
 
-        // On compresse légèrement l'image si elle est lourde via FileReader pour économiser l'espace Firestore
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = async () => {
@@ -193,7 +200,7 @@
           const articleData = {
             titre: document.getElementById('blogTitle').value,
             texte: document.getElementById('blogText').value,
-            imageUrl: base64Image, // Contient directement l'image encodée sous forme de chaîne de caractères
+            imageUrl: base64Image,
             createdAt: serverTimestamp()
           };
 
@@ -208,6 +215,44 @@
             blogSubmit.disabled = false;
           }
         };
+      });
+
+      // --- AFFICHAGE ET SUPPRESSION DES PHOTOS DU BLOG ---
+      const adminBlogList = document.getElementById('adminBlogList');
+      onSnapshot(query(collection(db, 'articles'), orderBy('createdAt', 'desc')), (snapshot) => {
+        adminBlogList.innerHTML = snapshot.empty ? '<p class="text-gray-500 col-span-full">Aucune photo publiée sur le blog.</p>' : '';
+        snapshot.forEach((snapshotDoc) => {
+          const art = snapshotDoc.data();
+          const item = document.createElement('div');
+          item.className = 'glass rounded-2xl overflow-hidden border border-white/10 flex flex-col justify-between';
+          item.innerHTML = `
+            <div>
+              <div class="h-40 bg-gray-900 overflow-hidden">
+                <img src="${art.imageUrl || ''}" class="w-full h-full object-cover" alt="Miniature">
+              </div>
+              <div class="p-4">
+                <h4 class="font-bold text-sm text-white truncate">${art.titre || 'Sans titre'}</h4>
+                <p class="text-xs text-gray-400 line-clamp-2 mt-1">${art.texte || ''}</p>
+              </div>
+            </div>
+            <div class="p-4 pt-0">
+              <button data-id="${snapshotDoc.id}" class="btn-del-art bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500 hover:text-white text-xs py-2 rounded-xl font-bold transition w-full">Supprimer la photo</button>
+            </div>
+          `;
+          adminBlogList.appendChild(item);
+        });
+
+        document.querySelectorAll('.btn-del-art').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            if(confirm("Supprimer définitivement cette photo et son article du blog ?")) {
+              try {
+                await deleteDoc(doc(db, 'articles', e.target.dataset.id));
+              } catch (err) {
+                alert("Erreur de suppression : " + err.message);
+              }
+            }
+          });
+        });
       });
 
       // --- RENDU EN TEMPS REEL DES DEMANDES D'INSCRIPTION ---
