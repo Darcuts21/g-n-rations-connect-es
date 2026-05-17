@@ -124,7 +124,7 @@
   </div>
 </section>
 
-<!-- SECTION LIVRE D'OR / AVIS (SANS INSCRIPTION) -->
+<!-- SECTION LIVRE D'OR / AVIS -->
 <section id="avis-section" class="px-6 py-24 max-w-7xl mx-auto">
   <div class="text-center mb-16">
     <h2 class="text-5xl font-black">Le livre d'or</h2>
@@ -132,7 +132,6 @@
   </div>
 
   <div class="grid lg:grid-cols-3 gap-12 items-start">
-    <!-- Formulaire d'avis express -->
     <div class="glass p-8 rounded-[30px] border border-white/10 lg:col-span-1">
       <h3 class="text-xl font-bold mb-6 text-cyan-300">Laisser un mot doux ✍️</h3>
       <form id="avisForm" class="space-y-4">
@@ -149,9 +148,7 @@
       </form>
     </div>
 
-    <!-- Zone d'affichage des avis (Mis à jour en temps réel) -->
     <div class="lg:col-span-2 grid md:grid-cols-2 gap-6" id="avisContainer">
-      <!-- Les avis Firebase vont s'injecter ici automatiquement. Si vide, affichage d'un loader/message -->
       <p class="text-gray-500 col-span-2 text-center py-10">Chargement des témoignages...</p>
     </div>
   </div>
@@ -174,12 +171,12 @@
   </div>
 </section>
 
-<!-- FORMULAIRE INSCRIPTION -->
+<!-- FORMULAIRE INSCRIPTION (ÉPURÉ) -->
 <section id="inscription" class="px-6 py-12">
   <div class="max-w-4xl mx-auto bg-white text-black rounded-[40px] p-10 md:p-16 shadow-2xl">
     <div class="text-center mb-12">
       <h2 class="text-5xl font-black text-gray-900">Nous contacter</h2>
-      <p class="mt-4 text-lg text-gray-500">Que vous soyez débutant ou que vous souhaitiez aider.</p>
+      <p class="mt-4 text-lg text-gray-500">Dites-nous comment nous pouvons vous aider ou comment vous souhaitez vous impliquer.</p>
     </div>
     <form id="inscriptionForm" class="grid md:grid-cols-2 gap-6">
       <input type="text" name="nom" placeholder="Nom complet" required class="bg-gray-100 p-5 rounded-2xl text-lg outline-none focus:ring-2 focus:ring-cyan-500">
@@ -193,42 +190,8 @@
         <option value="partenaire">Autre / Partenaire</option>
       </select>
 
-      <!-- CHOIX DES ATELIERS ENRICHI -->
-      <select name="atelier" class="md:col-span-2 bg-gray-100 p-5 rounded-2xl text-lg outline-none focus:ring-2 focus:ring-cyan-500">
-        <option value="aucun">Choisir un objectif ou un atelier (si applicable)</option>
-        <optgroup label="📱 Smartphone & Tablette">
-          <option>Prendre en main mon Smartphone (Bases)</option>
-          <option>Maîtriser WhatsApp & échanger avec mes proches</option>
-          <option>Gérer mes photos et envoyer des pièces jointes</option>
-          <option>Installer et organiser des applications</option>
-        </optgroup>
-        <optgroup label="💻 Ordinateur & Internet">
-          <option>Découverte de l'Ordinateur (Souris, Clavier, Système)</option>
-          <option>Naviguer sur Internet en toute sécurité</option>
-          <option>Gérer mes mots de passe et mes e-mails</option>
-          <option>Accompagnement aux démarches administratives en ligne</option>
-        </optgroup>
-      </select>
-
-      <div class="md:col-span-2 bg-gray-100 p-6 rounded-2xl">
-        <p class="text-gray-600 font-medium mb-3 text-lg">Format d'accompagnement souhaité :</p>
-        <div class="flex flex-col sm:flex-row gap-6">
-          <label class="flex items-center gap-3 cursor-pointer text-lg text-gray-800">
-            <input type="radio" name="modalite" value="atelier" checked class="w-5 h-5 text-cyan-500 accent-cyan-500">
-            En atelier collectif
-          </label>
-          <label class="flex items-center gap-3 cursor-pointer text-lg text-gray-800">
-            <input type="radio" name="modalite" value="domicile" class="w-5 h-5 text-cyan-500 accent-cyan-500">
-            À domicile
-          </label>
-          <label class="flex items-center gap-3 cursor-pointer text-lg text-gray-800">
-            <input type="radio" name="modalite" value="non_applicable" class="w-5 h-5 text-cyan-500 accent-cyan-500">
-            Non applicable (Bénévole / Partenaire)
-          </label>
-        </div>
-      </div>
-
-      <textarea name="message" placeholder="Votre message..." rows="4" class="md:col-span-2 bg-gray-100 p-5 rounded-2xl text-lg outline-none focus:ring-2 focus:ring-cyan-500 resize-none"></textarea>
+      <!-- CHAMP UNIQUE PERSONNALISABLE -->
+      <textarea name="besoins" placeholder="Décrivez votre besoin, votre projet ou vos disponibilités (ex: Type d'appareil utilisé, apprentissage souhaité, à domicile ou en atelier...)" rows="5" required class="md:col-span-2 bg-gray-100 p-5 rounded-2xl text-lg outline-none focus:ring-2 focus:ring-cyan-500 resize-none"></textarea>
       
       <button type="submit" id="submitBtn" class="md:col-span-2 bg-black text-white py-5 rounded-2xl text-xl font-bold hover:bg-cyan-500 hover:text-black transition duration-300">
         Envoyer ma demande
@@ -268,7 +231,6 @@
 </footer>
 
 <script type="module">
-  // On ajoute query, orderBy, limit et onSnapshot pour récupérer les avis en temps réel
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js'
   import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, limit, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js'
 
@@ -300,9 +262,7 @@
       email: formData.get('email'),
       telephone: formData.get('telephone'),
       type_profil: formData.get('type'),
-      atelier: formData.get('atelier'),
-      modalite: formData.get('modalite'),
-      message: formData.get('message'),
+      besoins: formData.get('besoins'), // Enregistre le champ personnalisé
       createdAt: serverTimestamp()
     };
 
@@ -320,12 +280,11 @@
     }
   });
 
-  // --- LOGIQUE DU LIVRE D'OR (AVIS TEMPS RÉEL) ---
+  // --- LOGIQUE DU LIVRE D'OR ---
   const avisForm = document.getElementById('avisForm');
   const avisContainer = document.getElementById('avisContainer');
   const avisSubmitBtn = document.getElementById('avisSubmitBtn');
 
-  // Envoi d'un avis à Firebase
   avisForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     avisSubmitBtn.innerText = 'Publication...';
@@ -350,10 +309,9 @@
     }
   });
 
-  // Lecture des avis en temps réel (on affiche les 6 derniers publiés)
   const q = query(collection(db, 'avis'), orderBy('createdAt', 'desc'), limit(6));
   onSnapshot(q, (snapshot) => {
-    avisContainer.innerHTML = ''; // On vide le container
+    avisContainer.innerHTML = '';
     
     if (snapshot.empty) {
       avisContainer.innerHTML = `<p class="text-gray-500 col-span-2 text-center py-10">Soyez le premier à laisser un message ! ✨</p>`;
